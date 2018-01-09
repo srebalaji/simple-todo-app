@@ -4,26 +4,40 @@ class Container extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {todos: new Map()};
+    this.state = {activeTodos: new Map(), finishedTodos: new Map(), todosState: "active"};
     this.updateTodo = this.updateTodo.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
   }
 
   updateTodo(list) {
-    // this.setState({todos: [...this.state.todos,{id: Math.floor((Math.random() * 100) + 1), todo: list}]});
-    this.setState({todos: this.state.todos.set(Math.floor((Math.random() * 100) + 1), list)});
+    this.setState({activeTodos: this.state.activeTodos.set(Math.floor((Math.random() * 100) + 1), list)});
   }
 
   deleteTodo(list_id) {
-    this.state.todos.delete(parseInt(list_id));
-    this.forceUpdate();
+    let done = this.state.activeTodos.get(parseInt(list_id));
+    this.state.activeTodos.delete(parseInt(list_id));
+    this.setState({finishedTodos: this.state.finishedTodos.set(list_id, done)});
+  }
+
+  getActiveTodos() {
+    this.setState({todosState: "active"});
+  }
+
+  getFinishedTodos() {
+    this.setState({todosState: "finished"});
   }
 
   render() {
+    let lists = this.state.todosState == "active" ? this.state.activeTodos : this.state.finishedTodos;
     return (
       <div>
+      <ul>
+        <li className="active" onClick={this.getActiveTodos.bind(this)}>Todos</li>
+        <li onClick={this.getFinishedTodos.bind(this)}>Done</li>
+      </ul>
+      <br />
         <Input update={this.updateTodo} />
-        <List items={this.state.todos} delete={this.deleteTodo}/>
+        <List items={lists} delete={this.deleteTodo}/>
       </div>
     );
   }
