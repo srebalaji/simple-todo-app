@@ -1,31 +1,17 @@
 import React from 'react';
 import Container from './Container';
-import  {storageLength, setStorage, getStorage} from './manageLocalStorage';
+import {storageLength, setStorage, getStorage} from './manageLocalStorage';
 
 class Appside extends React.Component {
 	constructor(props) {
 		super(props);
-		// let projects = new Map();
-		// projects.set(1, "Personal");
-		// projects.set(2, "Work");
-
-		// let items = new Map(); //parent
-		// items.set(1, new Map());
-		// let item = items.get(1);
-		// item.set("active_todos", new Map());
-		// item.set("finished_todos", new Map());
-
-		// items.set(2, new Map());
-		// item = items.get(2);
-		// item.set("active_todos", new Map());
-		// item.set("finished_todos", new Map());
 		var projects = {};
 		var items = {};
 		var currentProject = 0;
-		if (storageLength() != 0) {
+		if (storageLength() !== 0) {
 			projects = getStorage("projects");
 			items = getStorage("items");
-			currentProject = parseInt(Object.keys(projects)[0]);
+			currentProject = parseInt(Object.keys(projects)[0], 10);
 		}
 		this.state = {
 			currentProject: currentProject,
@@ -47,8 +33,8 @@ class Appside extends React.Component {
 
 		let projects = this.state.projects;
 		projects[project_id] = project;
-		if (this.state.currentProject == 0) {
-			this.setState({projects: this.state.projects, currentProject: parseInt(project_id), items: items}, function() {
+		if (this.state.currentProject === 0) {
+			this.setState({projects: this.state.projects, currentProject: parseInt(project_id, 10), items: items}, function() {
 				setStorage("projects", this.state.projects);
 				setStorage("items", this.state.items);
 			});
@@ -62,12 +48,11 @@ class Appside extends React.Component {
 	}
 
 	updateCurrentProject(project_id) {
-		this.setState({currentProject: parseInt(project_id) });
+		this.setState({currentProject: parseInt(project_id, 10) });
 	}
 
 	updateLists(list_item) {
 		let item_id = Math.floor((Math.random() * 100000000) + 1)
-		// this.state.items.get(this.state.currentProject).get('active_todos').set(item_id, list_item);
 		this.state.items[this.state.currentProject]["active_todos"][item_id] = list_item;
 		setStorage("items", this.state.items);
 		this.forceUpdate();
@@ -82,18 +67,16 @@ class Appside extends React.Component {
 	}
 
 	render() {
-		 if (Object.keys(this.state.projects).length != 0) {
-			var container = <Container item_id={this.state.currentProject} activeTodos={this.state.items[this.state.currentProject]["active_todos"]} finishedTodos={this.state.items[this.state.currentProject]["finished_todos"]} addItem={this.updateLists} finishItem={this.finishItem}/>;
-			var projectName = this.state.projects[this.state.currentProject]
-		}
-		else {
-			var container = '';
-			var projectName = '';
+		var container = '';
+		var projectName = '';
+		 if (Object.keys(this.state.projects).length !== 0) {
+			container = <Container item_id={this.state.currentProject} activeTodos={this.state.items[this.state.currentProject]["active_todos"]} finishedTodos={this.state.items[this.state.currentProject]["finished_todos"]} addItem={this.updateLists} finishItem={this.finishItem}/>;
+			projectName = this.state.projects[this.state.currentProject]
 		}
 		return (
 			<div>
 				{projectName}
-				{this.state.projects.size != 0 && <List lists={this.state.projects} updateCurrentProject={this.updateCurrentProject}/>}
+				{this.state.projects.size !== 0 && <List lists={this.state.projects} updateCurrentProject={this.updateCurrentProject}/>}
 				<Input addProject={this.addProject} />
 				<hr />
 				{container}

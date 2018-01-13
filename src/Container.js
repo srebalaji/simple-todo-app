@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 class Container extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.state = {activeTodos: new Map(), finishedTodos: new Map(), todosState: "active"};
     this.state = {activeTodos: this.props.activeTodos, finishedTodos: this.props.finishedTodos, todosState: "active"}
     this.updateTodo = this.updateTodo.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
@@ -15,13 +14,9 @@ class Container extends React.Component {
   }
   updateTodo(list) {
     this.props.addItem(list);
-    // this.setState({activeTodos: this.state.activeTodos.set(Math.floor((Math.random() * 100) + 1), list)});
   }
 
   deleteTodo(list_id) {
-    // let done = this.state.activeTodos.get(parseInt(list_id));
-    // this.state.activeTodos.delete(parseInt(list_id));
-    // this.setState({finishedTodos: this.state.finishedTodos.set(list_id, done)});
     this.props.finishItem(list_id);
   }
 

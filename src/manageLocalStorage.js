@@ -7,13 +7,21 @@ let isStorageAvailable = () => {
 }
 
 var setStorage = (item_name, item) => {
-	localStorage.setItem(item_name, JSON.stringify(item));
+	if (isStorageAvailable() === true) {
+		localStorage.setItem(item_name, JSON.stringify(item));
+	}
 }
 
 var getStorage = (item_name) => {
-	return JSON.parse(localStorage.getItem(item_name));
+	if (isStorageAvailable() === true) {
+		return JSON.parse(localStorage.getItem(item_name));
+	}
 }
 
-var storageLength = () => localStorage.length
+var storageLength = () => {
+	if (isStorageAvailable() === true) {
+		return localStorage.length;
+	}
+}
 
 export {setStorage, getStorage, storageLength};
