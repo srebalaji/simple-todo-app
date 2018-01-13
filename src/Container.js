@@ -1,22 +1,28 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class Container extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {activeTodos: new Map(), finishedTodos: new Map(), todosState: "active"};
+    // this.state = {activeTodos: new Map(), finishedTodos: new Map(), todosState: "active"};
+    this.state = {activeTodos: this.props.activeTodos, finishedTodos: this.props.finishedTodos, todosState: "active"}
     this.updateTodo = this.updateTodo.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({activeTodos: nextProps.activeTodos, finishedTodos: nextProps.finishedTodos, todosState: "active"});
+  }
   updateTodo(list) {
-    this.setState({activeTodos: this.state.activeTodos.set(Math.floor((Math.random() * 100) + 1), list)});
+    this.props.addItem(list);
+    // this.setState({activeTodos: this.state.activeTodos.set(Math.floor((Math.random() * 100) + 1), list)});
   }
 
   deleteTodo(list_id) {
-    let done = this.state.activeTodos.get(parseInt(list_id));
-    this.state.activeTodos.delete(parseInt(list_id));
-    this.setState({finishedTodos: this.state.finishedTodos.set(list_id, done)});
+    // let done = this.state.activeTodos.get(parseInt(list_id));
+    // this.state.activeTodos.delete(parseInt(list_id));
+    // this.setState({finishedTodos: this.state.finishedTodos.set(list_id, done)});
+    this.props.finishItem(list_id);
   }
 
   getActiveTodos() {
@@ -28,7 +34,7 @@ class Container extends React.Component {
   }
 
   render() {
-    let lists = this.state.todosState == "active" ? this.state.activeTodos : this.state.finishedTodos;
+    let lists = this.state.todosState === "active" ? this.state.activeTodos : this.state.finishedTodos;
     return (
       <div>
       <ul>
@@ -70,14 +76,11 @@ class Input extends React.Component {
 }
 
 class List extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const output = [];
-    for(let [key, item] of this.props.items) {
-      output.push(<ListItem item={ {item: item, id: key} } key={key} delete={this.props.delete} />);
+    for(let key in this.props.items) {
+      output.push(<ListItem item={ {item: this.props.items[key], id: key} } key={key} delete={this.props.delete} />);
     }
     return (
       <ul>{output}</ul>
