@@ -32,13 +32,13 @@ class Container extends React.Component {
     let lists = this.state.todosState === "active" ? this.state.activeTodos : this.state.finishedTodos;
     return (
       <div>
-      <ul>
-        <li className="active" onClick={this.getActiveTodos.bind(this)}>Todos</li>
-        <li onClick={this.getFinishedTodos.bind(this)}>Done</li>
+      <ul className="tab tab-block">
+        <li className={this.state.todosState == "active" ? 'tab-item active' : 'tab-item'} onClick={this.getActiveTodos.bind(this)}><a>Todos</a></li>
+        <li className={this.state.todosState == "finished" ? 'tab-item active' : 'tab-item'} onClick={this.getFinishedTodos.bind(this)}><a>Done</a></li>
       </ul>
       <br />
-        <Input update={this.updateTodo} />
         <List items={lists} delete={this.deleteTodo}/>
+        <Input update={this.updateTodo} />
       </div>
     );
   }
@@ -62,9 +62,9 @@ class Input extends React.Component {
 
   render() {
     return (
-      <form>
+      <form className="form-group">
       <input type="text" placeholder="Create" id="enterTodo" onChange={this.handleChange.bind(this)}/>
-      <input type="button" value="Add" onClick={this.addTodo.bind(this)} />
+      <input type="button" className="btn btn-link" value="Add" onClick={this.addTodo.bind(this)} />
       </form>
     );
   }
@@ -78,7 +78,9 @@ class List extends React.Component {
       output.push(<ListItem item={ {item: this.props.items[key], id: key} } key={key} delete={this.props.delete} />);
     }
     return (
-      <ul>{output}</ul>
+      <div className="title">
+        {output}
+      </div>
     );
   }
 }
@@ -92,7 +94,7 @@ class ListItem extends React.Component {
 
   render() {
     return (
-      <li>{this.props.item.item} <span data-id={this.props.item.id} onClick={this.deleteItem.bind(this)}>x</span></li>
+      <div className="tile-content"><p className="tile-title">{this.props.item.item} <span data-id={this.props.item.id} onClick={this.deleteItem.bind(this)}>x</span></p></div>
     );
   }
 }

@@ -74,12 +74,17 @@ class Appside extends React.Component {
 			projectName = this.state.projects[this.state.currentProject]
 		}
 		return (
-			<div>
+			<div className="container">
 				{projectName}
-				{this.state.projects.size !== 0 && <List lists={this.state.projects} updateCurrentProject={this.updateCurrentProject}/>}
-				<Input addProject={this.addProject} />
-				<hr />
-				{container}
+				<div className="columns">
+					<div className="column col-3 col-mx-auto">
+						{this.state.projects.size !== 0 && <List lists={this.state.projects} active={this.state.currentProject} updateCurrentProject={this.updateCurrentProject}/>}
+						<Input addProject={this.addProject} />
+					</div>
+					<div className="column col-9">
+						{container}
+					</div>
+				</div>
 			</div>
 		)
 	}
@@ -97,7 +102,7 @@ class Input extends React.Component {
 		return (
 			<form>
 	      <input type="text" placeholder="Create Project" id="enterProject" ref="enterProject"/>
-	      <input type="button" value="Add" onClick={this.addProject.bind(this)} />
+	      <input type="button" className="btn btn-link" value="Add" onClick={this.addProject.bind(this)} />
       </form>
 		)
 	}
@@ -113,10 +118,10 @@ class List extends React.Component {
 	render() {
 		let output = [];
 		for(let key in this.props.lists) {
-			output.push(<li key={key} data-id={key} onClick={this.handleChange.bind(this)}>{this.props.lists[key]}</li>);
+			output.push(<li className={key == this.props.active? 'nav-item active' : 'nav-item'} key={key} ><a data-id={key} onClick={this.handleChange.bind(this)}>{this.props.lists[key]}</a></li>);
 		}
 		return(
-			<ul>
+			<ul className="nav">
 				{output}
 			</ul>
 		)
