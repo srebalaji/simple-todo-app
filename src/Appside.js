@@ -77,11 +77,11 @@ class Appside extends React.Component {
 			<div className="container">
 				{projectName}
 				<div className="columns">
-					<div className="column col-3 col-mx-auto">
+					<div className="column col-3 col-mx-auto" Style="margin-top: 80px">
 						{this.state.projects.size !== 0 && <List lists={this.state.projects} active={this.state.currentProject} updateCurrentProject={this.updateCurrentProject}/>}
 						<Input addProject={this.addProject} />
 					</div>
-					<div className="column col-9">
+					<div className="column col-8">
 						{container}
 					</div>
 				</div>
@@ -118,7 +118,7 @@ class List extends React.Component {
 	render() {
 		let output = [];
 		for(let key in this.props.lists) {
-			output.push(<li className={key == this.props.active? 'nav-item active' : 'nav-item'} key={key} ><a data-id={key} onClick={this.handleChange.bind(this)}>{this.props.lists[key]}</a></li>);
+			output.push(<li className={key == this.props.active? 'nav-item active' : 'nav-item'} key={key} ><a Style="font-size: 1.2em" data-id={key} onClick={this.handleChange.bind(this)}>{this.props.lists[key]}</a></li>);
 		}
 		return(
 			<ul className="nav">

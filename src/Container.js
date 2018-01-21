@@ -78,7 +78,8 @@ class List extends React.Component {
       output.push(<ListItem item={ {item: this.props.items[key], id: key} } key={key} delete={this.props.delete} />);
     }
     return (
-      <div className="title">
+      
+      <div className="container">
         {output}
       </div>
     );
@@ -94,9 +95,12 @@ class ListItem extends React.Component {
 
   render() {
     return (
-      <div className="tile-content"><p className="tile-title">{this.props.item.item} <span data-id={this.props.item.id} onClick={this.deleteItem.bind(this)}>x</span></p></div>
+      <div className="columns"><div className="column col-12"><h6 Style="padding: 7px">{this.props.item.item} <span data-id={this.props.item.id} onClick={this.deleteItem.bind(this)}>x</span></h6><Divider /></div></div>
     );
   }
 }
 
+const Divider = () => {
+  return <div className="divider"></div>
+}
 export default Container;

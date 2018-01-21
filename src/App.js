@@ -5,15 +5,12 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      {/*<div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Todo-er</h1>
         </header>
-        <p className="App-intro">
-          Todo-er
-        </p>
-      </div>
+      </div> */}
     );
   }
 }

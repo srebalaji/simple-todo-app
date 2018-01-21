@@ -6,6 +6,6 @@ import App from './App';
 import Appside from './Appside'
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(<Appside />, document.getElementById('app-side'));
 registerServiceWorker();
